@@ -1,6 +1,9 @@
 package core
 
-import "github.com/akbariandev/krypton/internal/p2p"
+import (
+	"context"
+	"github.com/akbariandev/krypton/internal/p2p"
+)
 
 type Role struct {
 	Name string
@@ -12,12 +15,13 @@ type Node struct {
 	PeerStream *p2p.PeerStream
 }
 
-func NewNode(ID string, listenPort int) (*Node, error) {
+func NewNode(ctx context.Context, ID string, NetworkGroupName string, listenPort int) (*Node, error) {
 	ps, err := p2p.NewPeerStream(listenPort)
 	if err != nil {
 		return nil, err
 	}
 
+	ps.Run(ctx, NetworkGroupName)
 	return &Node{
 		ID:         ID,
 		PeerStream: ps,
