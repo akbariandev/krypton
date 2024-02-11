@@ -6,16 +6,15 @@ import (
 )
 
 type Config struct {
-	ID                       string
-	NetWorkGroupName         string
-	ListenPort               int
-	Roles                    []string
-	CommitteeSelectionPeriod int
-	MinNodes                 int
+	ID               string
+	NetWorkGroupName string
+	ListenPort       int
+	Roles            []string
+	MinNodesCover    int
 }
 
 func NewConfig() (Config, error) {
-	viper.SetConfigFile("./config/config.yml")
+	viper.SetConfigFile("./config/data/config.yml")
 	viper.SetConfigType("yml")
 	err := viper.ReadInConfig()
 	if err != nil {

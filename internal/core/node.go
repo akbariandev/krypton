@@ -13,18 +13,20 @@ type Node struct {
 	ID         string
 	Roles      []Role
 	PeerStream *p2p.PeerStream
+	IsPrimary  bool
 }
 
-func NewNode(ctx context.Context, ID string, NetworkGroupName string, listenPort int) (*Node, error) {
+func NewNode(ctx context.Context, ID string, networkGroupName string, listenPort int, isPrimary bool) (*Node, error) {
 	ps, err := p2p.NewPeerStream(listenPort)
 	if err != nil {
 		return nil, err
 	}
 
-	ps.Run(ctx, NetworkGroupName)
+	ps.Run(ctx, networkGroupName)
 	return &Node{
 		ID:         ID,
 		PeerStream: ps,
+		IsPrimary:  isPrimary,
 	}, nil
 }
 
