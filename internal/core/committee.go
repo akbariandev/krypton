@@ -10,29 +10,25 @@ type Committee struct {
 	members []*Node
 }
 
-func InitCommittee(nodes []*Node) *Committee {
-	return &Committee{
-		members: nodes,
-	}
+func (c *Committee) GetMembers() []*Node {
+	return c.members
 }
 
-func (c *Committee) SelectCommittee(mode CommitteeSelectionMode, size int) []*Node {
+func (c *Committee) SelectCommittee(nodes []*Node, mode CommitteeSelectionMode, size int) {
 	switch mode {
 	case CommitteeRandomSelection:
-		return c.selectRandomCommittee(size)
+		c.selectRandomCommittee(nodes, size)
 	default:
-		return c.selectRandomCommittee(size)
+		c.selectRandomCommittee(nodes, size)
 	}
 }
 
-func (c *Committee) selectRandomCommittee(size int) []*Node {
-	members := make([]*Node, 0, size) // Initialize members with size 3
+func (c *Committee) selectRandomCommittee(nodes []*Node, size int) {
+	c.members = make([]*Node, 0, size) // Initialize members with size 3
 
-	rand.Shuffle(len(c.members), func(i, j int) { c.members[i], c.members[j] = c.members[j], c.members[i] })
+	rand.Shuffle(len(nodes), func(i, j int) { nodes[i], nodes[j] = nodes[j], nodes[i] })
 
-	for i := 0; i < min(len(c.members), size); i++ {
-		members = append(members, c.members[i])
+	for i := 0; i < min(len(nodes), size); i++ {
+		c.members = append(c.members, nodes[i])
 	}
-
-	return members
 }
