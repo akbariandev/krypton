@@ -1,6 +1,9 @@
 package core
 
-import "math/rand"
+import (
+	"errors"
+	"math/rand"
+)
 
 type CommitteeSelectionMode int
 
@@ -14,13 +17,15 @@ func (c *Committee) GetMembers() []*Node {
 	return c.members
 }
 
-func (c *Committee) SelectCommittee(nodes []*Node, mode CommitteeSelectionMode, size int) {
+func (c *Committee) SelectCommittee(nodes []*Node, mode CommitteeSelectionMode, size int) error {
 	switch mode {
 	case CommitteeRandomSelection:
 		c.selectRandomCommittee(nodes, size)
 	default:
-		c.selectRandomCommittee(nodes, size)
+		return errors.New("invalid committee selection mode")
 	}
+
+	return nil
 }
 
 func (c *Committee) selectRandomCommittee(nodes []*Node, size int) {
