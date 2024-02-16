@@ -29,7 +29,7 @@ func (c *Committee) SelectCommittee(nodes []*Node, mode CommitteeSelectionMode, 
 }
 
 func (c *Committee) selectRandomCommittee(nodes []*Node, size int) {
-	c.members = make([]*Node, 0, size) // Initialize members with size 3
+	c.members = make([]*Node, 0, size)
 
 	rand.Shuffle(len(nodes), func(i, j int) { nodes[i], nodes[j] = nodes[j], nodes[i] })
 

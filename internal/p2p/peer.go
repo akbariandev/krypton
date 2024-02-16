@@ -43,7 +43,6 @@ func (ps *PeerStream) Run(ctx context.Context, streamGroup string) {
 
 	// connect to other peers
 	ps.Host.SetStreamHandler("/p2p/1.0.0", ps.handleStream)
-	//log.Println("listening for connections")
 	peerChan := initMDNS(ps.Host, streamGroup)
 	go func(ctx context.Context) {
 		for {
